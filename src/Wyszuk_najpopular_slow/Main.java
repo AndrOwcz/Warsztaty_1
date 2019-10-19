@@ -33,11 +33,9 @@ public class Main {
             for (Element elem : links) {
                 stringBuilder.append(elem.text() + " ");
             }
-//            System.out.println(stringBuilder);
 
             String[] wordsTable = stringBuilder.toString().replaceAll("\\p{P}", "")
                     .toLowerCase().split(" ");
-//            System.out.println(Arrays.toString(wordsTable));
             String popularFileName = "popular_words.txt";
             Path filePath = Paths.get(popularFileName);
             if (!Files.exists(filePath)) {
@@ -98,14 +96,12 @@ public class Main {
                     this.base = base;
                 }
 
-                // Note: this comparator imposes orderings that are inconsistent with
-                // equals.
                 public int compare(String a, String b) {
                     if (base.get(a) >= base.get(b)) {
                         return -1;
                     } else {
                         return 1;
-                    } // returning 0 would merge keys
+                    }
                 }
             }
 
@@ -133,7 +129,6 @@ public class Main {
                 ValueComparator bvc = new ValueComparator(occurrences);
                 TreeMap<String, Integer> sorted_map = new TreeMap<String, Integer>(bvc);
                 sorted_map.putAll(occurrences);
-//                System.out.println("results: " + sorted_map);
 
                 String countedPopularFileName = "FRQ_filtered_popular_words_counted.txt";
                 int count = 0;
@@ -144,14 +139,10 @@ public class Main {
                 while (it.hasNext() && count < sorted_map.size()) {
 
                     Map.Entry<String, Integer> pairs = it.next();
-
-                    // since you only want the value, we only care about pairs.getValue(), which is written to out
                     out.write(pairs.getKey() + " " + pairs.getValue() + "\n");
 
-                    // increment the record count once we have printed to the file
                     count++;
                 }
-                // close the file and end
                 out.close();
                 System.out.println("zapisano pomyślnie plik " + countedPopularFileName + ", w którym są najczęściej używane " +
                         "słowa w kolejności alfabetycznej, a także ilość ich występowań na danej stronie");
